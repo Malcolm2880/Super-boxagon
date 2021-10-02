@@ -9,3 +9,11 @@ The application I want to make is a short and fast game. It will be challenging 
 - check their best time(s)
 - be able to play different difficulties
 - have fun
+
+
+
+## User Stories
+- As a user, I want to check my best time
+- As a user, I want to dodge enemies
+- As a user, I want to be able to change the difficulty
+- As a user, I want to add my time to a leaderboard
