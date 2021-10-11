@@ -12,6 +12,9 @@ public class Player {
         return index;
     }
 
+
+
+    // REQUIRES: index to be greater than 0
     // MODIFIES: this
     // EFFECTS: sets the current player position.
 
@@ -33,7 +36,9 @@ public class Player {
     }
 
     public boolean isDead(EnemyPattern ep) {
+
         return ep.getPattern().substring(index,index + 1).equals("*");
+
     }
 
 

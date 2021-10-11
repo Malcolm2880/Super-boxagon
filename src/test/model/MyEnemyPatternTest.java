@@ -3,58 +3,50 @@ package model;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class MyEnemyPatternTest {
 
     @Test
-    public void leaderBoardConstructorTest() {
-        Leaderboard l = new Leaderboard();
-        Score s = new Score("bob",0);
-        l.addScore(s);
-        assertEquals("The Leaderboard is as follows:" + "\n" + "bob 0", l.getAllScores());
+    public void enemyPatternConstructorTest() {
+        EnemyPattern ep = new EnemyPattern(5);
+        assertFalse(ep.getPattern().equals(""));
+        EnemyPattern ep2 = new EnemyPattern(0);
+        assertFalse(ep.getPattern().equals(""));
 
         // System.out.println(l.getAllScores());
 
     }
 
+    @Test
+    public void enemyPatternGetPatternTest() {
+        EnemyPattern ep = new EnemyPattern(5);
+        assertFalse(ep.getPattern().equals(""));
+        assertTrue(ep.getPattern().contains("@"));
+    }
+
 
     @Test
-    public void leaderBoardAddTest() {
-        Leaderboard l = new Leaderboard();
-        Score s = new Score("bob", 0);
-        l.addScore(s);
-        assertEquals("The Leaderboard is as follows:" + "\n" + "bob 0", l.getAllScores());
-       l.addScore(new Score("bobby", 10));
-        l.addScore(new Score("obby",5));
-        assertEquals("bobby 10",l.getTopScore());
-        assertEquals("The Leaderboard is as follows:" + "\n" + "bobby 10" + "\n" + "obby 5" + "\n" + "bob 0",l.getAllScores());
+    public void enemyPatternGenerateSmallDifficultyTest() {
+        EnemyPattern ep = new EnemyPattern(1);
+       assertTrue(ep.generatePattern(0,1).equals("@"));
+        assertTrue(ep.generatePattern(1,2).equals("*@"));
+        assertTrue(ep.generatePattern(0,2).equals("@*"));
+        assertTrue(ep.generatePattern(0,5).equals("@****"));
+        assertTrue(ep.generatePattern(3,5).equals("***@*"));
+        assertTrue(ep.generatePattern(4,5).equals("****@"));
+
+
+
 
     }
     @Test
-    public void leaderBoardGetAllTest() {
-        Leaderboard l = new Leaderboard();
-        assertEquals("The Leaderboard is as follows:", l.getAllScores());
-        Score s = new Score("bob", 0);
-        l.addScore(s);
-        assertEquals("The Leaderboard is as follows:" + "\n" + "bob 0", l.getAllScores());
-        l.addScore(new Score("bobby", 10));
-        l.addScore(new Score("obby",5));
-        assertEquals("The Leaderboard is as follows:" + "\n" + "bobby 10" + "\n" + "obby 5" + "\n" + "bob 0",l.getAllScores());
-    }
-    @Test
-    public void leaderBoardGetTopTest() {
-        Leaderboard l = new Leaderboard();
-        Score s = new Score("bob", 0);
-        l.addScore(s);
-        assertEquals("bob 0", l.getTopScore());
-
-
-        l.addScore(new Score("bobby", 10));
-
-        assertEquals("bobby 10", l.getTopScore());
-        l.addScore(new Score("obby", 5));
-
-        assertEquals("bobby 10", l.getTopScore());
-
+    public void enemyPatternGenerateLargeDifficultyTest() {
+        EnemyPattern ep = new EnemyPattern(1);
+        assertTrue(ep.generatePattern(0, 5).equals("@****"));
+        assertTrue(ep.generatePattern(3, 5).equals("***@*"));
+        assertTrue(ep.generatePattern(4, 5).equals("****@"));
     }
 }
