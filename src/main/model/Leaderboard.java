@@ -9,23 +9,31 @@ public class Leaderboard {
         names = new ArrayList<Score>();
     }
 
+    // REQUIRES: Score be not null, and have a proper name and value
+    // MODIFIES: this
+    // EFFECTS: add the given score. returns if successful. Higher scores will be listed higher
 
-    public boolean addScore(Score s) {
+    public void addScore(Score s) {
         if (names.size() == 0) {
             names.add(s);
-            return true;
+            return;
+
         }
         for (int i = 0; i < names.size();i++) {
             if (s.getScore() >= names.get(i).getScore()) {
                 names.add(i,s);
-                return true;
+                return;
             }
         }
-        return false;
+
     }
 
+
+    // EFFECTS: returns the leaderboard
+
     public String getAllScores() {
-        String bob = "";
+        String bob = "The Leaderboard is as follows:";
+
         for (Score i : names) {
             if (bob.length() != 0) {
                 bob += "\n";
@@ -35,6 +43,10 @@ public class Leaderboard {
         }
         return bob;
     }
+
+
+    // REQUIRES: Leaderboard is not empty
+    // EFFECTS: returns the top score.
 
     public String getTopScore() {
         String bob = "";

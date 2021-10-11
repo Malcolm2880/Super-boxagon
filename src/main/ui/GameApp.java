@@ -1,25 +1,96 @@
 package ui;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import model.*;
 
 import java.util.Scanner;
+
+
+
+// Note that the GameApp structure is based on the TellerApp project
 
 public class GameApp {
     private Scanner input;
     private Leaderboard board;
     private int difficulty = 1;
+    private boolean timeOut = false;
 
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
+    // REQUIRES: User input a movement value that is an integer.
+// MODIFIES: this
+    // EFFECTS: allows you to actually play the game.
+    public void runGame() {
+        boolean alive = true;
+        int score = 0;
+        Player p = new Player();
+        int index = p.getIndex();
+        while (alive) {
+            EnemyPattern enemy = new EnemyPattern(difficulty);
+            System.out.println(enemy.getPattern());
+            System.out.println(p.generatePosition(difficulty));
+            Timer t = new Timer();
+            t.schedule(setupTimer(p),10 * 1000);
+            index = input.nextInt();
+            if (timeOut) {
+                System.out.println("Your input was too late");
+                t.cancel();
+                break;
+            }
+            t.cancel();
+            if (index > difficulty + 1) {
+                System.out.println("Invalid, ur ded kiddo!");
+                break;
+            }
+            p.setIndex(index);
 
-    public GameApp() {
-
-        while (true) {
+            if (p.isDead(enemy)) {
+                System.out.println("You died!");
+                break;
+            }
+            score++;
+            if (score % 3 == 0) {
+                difficulty++;
+            }
 
         }
-        //stub
+        resetGame();
+        createScore(score);
     }
-    // Note that the GameApp structure is based on the TellerApp project
+    // MODIFIES: this
+    // EFFECTS: resets game variables back to default
 
-    private void runGame() {
+    public void resetGame() {
+        timeOut = false;
+        difficulty = 1;
+    }
+    // MODIFIES: this
+    // EFFECTS: creates a new score with the given value
+
+    public void createScore(int score) {
+        System.out.println("Give your score a name:");
+        board.addScore(new Score(input.next(), score));
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: setups the timer
+    public TimerTask setupTimer(Player p) {
+
+
+        TimerTask tt = new TimerTask() {
+            public void run() {
+                timeOut = true;
+            }
+        };
+        return tt;
+
+    }
+
+
+
+    // EFFECTS: processes user command
+    public GameApp() {
         boolean keepGoing = true;
         String command = null;
 
@@ -44,7 +115,7 @@ public class GameApp {
     // EFFECTS: processes user command
     private void processCommand(String command) {
         if (command.equals("h")) {
-            showHighScore();
+            showLeaderBoard();
         } else if (command.equals("d")) {
             changeDifficulty();
         } else if (command.equals("s")) {
@@ -71,21 +142,18 @@ public class GameApp {
         System.out.println("\tq -> quit");
     }
 
-
-    private void showHighScore() {
+    // EFFECTS: displays all the scores
+    private void showLeaderBoard() {
 
         System.out.println(board.getAllScores());
 
     }
 
 
-
-
-
     // MODIFIES: this
     // EFFECTS: changes the difficulty
     private void changeDifficulty() {
-
+        System.out.println("Your difficulty was increased by one, Good luck!");
         difficulty++;
 
 

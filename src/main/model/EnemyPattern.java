@@ -3,37 +3,38 @@ package model;
 public class EnemyPattern {
     private String pattern = "";
 
+
+    public EnemyPattern(int d) {
+        pattern = generatePattern((int) (Math.random() * d + 1), d + 1);
+
+    }
+
+    // EFFECTS: gets the current pattern
+    //todo delete?
     public String getPattern() {
         return this.pattern;
     }
 
 
+    // EFFECTS: generates the current pattern
+    private String generatePattern(int value, int d) {
+        System.out.println("The current D is");
+        System.out.println(d);
+        System.out.println("The current value is");
+        System.out.println(value);
 
-    public EnemyPattern() {
-        pattern = generatePattern((int) (Math.random() * 100000));
-    }
 
-    private String generatePattern(int value) {
         String enemy = "";
-        String bob = Integer.toString(value);
-        for (int i = 0; i < bob.length(); i++) {
-            String temp = bob.substring(i, i + 1);
-            int num = Integer.parseInt(temp);
-            if (num % 3 == 0) {
+        for (int i = 0; i < d; i++) {
+            if (i == value) {
                 enemy += "@";
-            } else if (num % 2 == 0) {
-                enemy += "*";
-
             } else {
-                enemy += "$";
+                enemy += "*";
             }
-
         }
         return enemy;
 
     }
-
-
 
 
 }

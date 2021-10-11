@@ -7,17 +7,22 @@ public class Player {
         index = 3;
     }
 
+// EFFECTS: gets the current index
     public int getIndex() {
         return index;
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets the current player position.
+
     public void setIndex(int index) {
-        this.index = index;
+        this.index = --index;
     }
 
-    public String generatePosition() {
+    // EFFECTS: displays the position of the player
+    public String generatePosition(int diff) {
         String bob = "";
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < diff + 1; i++) {
             if (i == index) {
                 bob += "^";
             } else {
@@ -30,6 +35,7 @@ public class Player {
     public boolean isDead(EnemyPattern ep) {
         return ep.getPattern().substring(index,index + 1).equals("*");
     }
+
 
 
 }
