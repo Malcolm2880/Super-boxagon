@@ -15,54 +15,54 @@ public class GameApp {
     private Leaderboard board;
     private int difficulty = 1;
     private boolean timeOut = false;
+    private Player player;
+    private int currentScore;
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     // REQUIRES: User input a movement value that is an integer.
 // MODIFIES: this
     // EFFECTS: allows you to actually play the game.
     public void runGame() {
         boolean alive = true;
-        int score = 0;
-        Player p = new Player();
-        int index = p.getIndex();
+        resetGame();
         while (alive) {
             EnemyPattern enemy = new EnemyPattern(difficulty);
             System.out.println(enemy.getPattern());
-            System.out.println(p.generatePosition(difficulty));
+            System.out.println(player.generatePosition(difficulty));
             Timer t = new Timer();
-            t.schedule(setupTimer(p),10 * 1000);
-            index = input.nextInt();
+            t.schedule(setupTimer(player),10 * 1000);
+            player.setIndex(input.nextInt());
             if (timeOut) {
                 System.out.println("Your input was too late");
                 t.cancel();
                 break;
             }
             t.cancel();
-            if (index > difficulty + 1) {
-                System.out.println("Invalid, ur ded kiddo!");
-                break;
-            }
-            p.setIndex(index);
-
-            if (p.isDead(enemy)) {
+            if (player.getIndex() > difficulty + 1 || player.isDead(enemy)) {
                 System.out.println("You died!");
                 break;
             }
-            score++;
-            if (score % 3 == 0) {
-                difficulty++;
-            }
-
+            currentScore = currentScore + difficultySpike(currentScore);
         }
-        resetGame();
-        createScore(score);
+        difficulty = 1;
+
+        createScore(currentScore);
     }
     // MODIFIES: this
     // EFFECTS: resets game variables back to default
 
     public void resetGame() {
+        currentScore = 0;
+        player = new Player();
         timeOut = false;
-        difficulty = 1;
+    }
+
+    //MODIFIES: this
+    //EFFECTS: Increases the difficulty at incremental rates.
+    public int difficultySpike(int score) {
+        if (score % 3 == 0) {
+            difficulty++;
+        }
+        return 1;
     }
     // MODIFIES: this
     // EFFECTS: creates a new score with the given value
@@ -88,7 +88,7 @@ public class GameApp {
     }
 
 
-
+// taken from the teller class example
     // EFFECTS: processes user command
     public GameApp() {
         boolean keepGoing = true;
@@ -118,6 +118,8 @@ public class GameApp {
             showLeaderBoard();
         } else if (command.equals("d")) {
             changeDifficulty();
+        } else if (command.equals("t")) {
+            showTopScore();
         } else if (command.equals("s")) {
             runGame();
         } else {
@@ -125,6 +127,7 @@ public class GameApp {
         }
     }
 
+    // taken from the teller class
     // MODIFIES: this
     // EFFECTS: initializes accounts
     private void init() {
@@ -137,6 +140,7 @@ public class GameApp {
     private void displayMenu() {
         System.out.println("\nSelect from:");
         System.out.println("\th -> Highscores");
+        System.out.println("\tt -> Your Top Score");
         System.out.println("\td -> Change Difficulty");
         System.out.println("\ts -> Start the game");
         System.out.println("\tq -> quit");
@@ -147,6 +151,17 @@ public class GameApp {
 
         System.out.println(board.getAllScores());
 
+    }
+
+    // EFFECTS: displays all the scores
+    private void showTopScore() {
+        System.out.println("Please enter your name");
+        int index =  board.getNamesScore(input.next());
+        if (index > 0) {
+            System.out.println("Your highest score is at position: " + index);
+        } else {
+            System.out.println("No one has that name!");
+        }
     }
 
 

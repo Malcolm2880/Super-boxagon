@@ -54,4 +54,16 @@ public class Leaderboard {
         bob += names.get(0).getScore();
         return bob;
     }
+
+    // EFFECTS: returns the top score with the given name.
+    public int getNamesScore(String givenName) {
+        int index = 1;
+        for (Score i : names) {
+            if (i.getName().equalsIgnoreCase(givenName)) {
+                return index;
+            }
+            index++;
+        }
+        return -1;
+    }
 }

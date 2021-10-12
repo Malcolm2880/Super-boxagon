@@ -59,4 +59,20 @@ class MyGameLeaderboardTest {
         assertEquals("bobby 10", l.getTopScore());
 
     }
+
+    @Test
+    public void leaderBoardGetNamesScoreTest() {
+        Leaderboard l = new Leaderboard();
+        Score s = new Score("bob", 0);
+        l.addScore(s);
+        assertEquals(1, l.getNamesScore("bob"));
+        l.addScore(new Score("bob", -5));
+        assertEquals(1, l.getNamesScore("bob"));
+        l.addScore(new Score("bob", 10));
+        l.addScore(new Score("champ", 100));
+        assertEquals(2, l.getNamesScore("bob"));
+        assertEquals(-1, l.getNamesScore("chara"));
+
+
+    }
 }
