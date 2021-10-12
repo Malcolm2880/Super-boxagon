@@ -28,6 +28,8 @@ class MyGameLeaderboardTest {
         l.addScore(new Score("obby",5));
         assertEquals("bobby 10",l.getTopScore());
         assertEquals("The Leaderboard is as follows:" + "\n" + "bobby 10" + "\n" + "obby 5" + "\n" + "bob 0",l.getAllScores());
+        l.addScore(new Score("fool",-5));
+        assertEquals("The Leaderboard is as follows:" + "\n" + "bobby 10" + "\n" + "obby 5" + "\n" + "bob 0" + "\n" + "fool -5",l.getAllScores());
 
     }
     @Test

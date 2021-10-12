@@ -24,8 +24,9 @@ public class Leaderboard {
                 names.add(i,s);
                 return;
             }
-        }
 
+        }
+        names.add(s);
     }
 
 
@@ -35,9 +36,8 @@ public class Leaderboard {
         String bob = "The Leaderboard is as follows:";
 
         for (Score i : names) {
-            if (bob.length() != 0) {
-                bob += "\n";
-            }
+            bob += "\n";
+
             bob += i.getName() + " ";
             bob += i.getScore();
         }
