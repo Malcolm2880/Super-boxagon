@@ -37,7 +37,7 @@ public class GameApp {
                 break;
             }
             t.cancel();
-            if (player.getIndex() > difficulty + 1 || player.isDead(enemy)) {
+            if (player.getIndex() > difficulty || player.isDead(enemy)) {
                 System.out.println("You died!");
                 break;
             }
@@ -111,6 +111,7 @@ public class GameApp {
         System.out.println("\nGoodbye!");
     }
 
+    // silghtly modified from the teller method with the same name
     // MODIFIES: this
     // EFFECTS: processes user command
     private void processCommand(String command) {
@@ -136,6 +137,7 @@ public class GameApp {
         input.useDelimiter("\n");
     }
 
+    //Taken from the teller class
     // EFFECTS: displays menu of options to user
     private void displayMenu() {
         System.out.println("\nSelect from:");
@@ -153,7 +155,7 @@ public class GameApp {
 
     }
 
-    // EFFECTS: displays all the scores
+    // EFFECTS: displays the top score with the given name
     private void showTopScore() {
         System.out.println("Please enter your name");
         int index =  board.getNamesScore(input.next());
