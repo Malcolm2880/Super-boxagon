@@ -10,7 +10,6 @@ public class Score {
         score = s;
     }
 
-//getname
     public String getName() {
         return name;
     }
