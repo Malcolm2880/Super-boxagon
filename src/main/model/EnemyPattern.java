@@ -1,15 +1,19 @@
 package model;
 
+
+
+//This class generates and stores a pattern for the player to dodge.
+
 public class EnemyPattern {
     private String pattern = "";
 
-// REQUIRES: d to be a positive integer
+    // REQUIRES: difficulty to be a positive integer
+    // EFFECTS: Creates an Enemy Pattern, and generates a random pattern based on difficulty.
     public EnemyPattern(int difficulty) {
         pattern = generatePattern((int) (Math.random() * (difficulty + 1)), difficulty + 1);
 
     }
 
-    // EFFECTS: gets the current pattern
     public String getPattern() {
 
         return this.pattern;
@@ -17,7 +21,7 @@ public class EnemyPattern {
 
 
 
-    // REQUIRES: value to be smaller than d
+    // REQUIRES: value to be strictly smaller than difficulty
     // EFFECTS: generates the current pattern
     public String generatePattern(int value, int difficulty) {
         String enemy = "";

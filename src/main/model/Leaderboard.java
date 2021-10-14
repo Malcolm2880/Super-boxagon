@@ -2,9 +2,13 @@ package model;
 
 import java.util.*;
 
+//Class that stores Scores, and allows retrieval of Scores.
+//Note that scores are automatically inputted in a sorted order.
+
 public class Leaderboard {
     ArrayList<Score> names;
 
+    // EFFECTS: Creates an empty leaderboard.
     public Leaderboard() {
         names = new ArrayList<Score>();
     }
