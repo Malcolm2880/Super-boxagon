@@ -5,7 +5,7 @@ public class EnemyPattern {
 
 // REQUIRES: d to be a positive integer
     public EnemyPattern(int difficulty) {
-        pattern = generatePattern((int) (Math.random() * difficulty + 1), difficulty + 1);
+        pattern = generatePattern((int) (Math.random() * (difficulty + 1)), difficulty + 1);
 
     }
 

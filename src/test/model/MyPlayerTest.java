@@ -1,6 +1,7 @@
 package model;
 
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -9,9 +10,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MyPlayerTest {
 
+    Player p;
+    @BeforeEach
+    public void runBefore() {
+        p = new Player();
+
+
+    }
+
+
     @Test
     public void playerConstructorTest() {
-        Player p = new Player();
+       // Player p = new Player();
         assertTrue(p.getIndex() == 3);
 
         // System.out.println(l.getAllScores());
@@ -20,7 +30,7 @@ class MyPlayerTest {
 
     @Test
     public void playerGetterTest() {
-        Player p = new Player();
+       // Player p = new Player();
         assertTrue(p.getIndex() == 3);
         p.setIndex(5);
         assertTrue(p.getIndex() == 4);
@@ -31,7 +41,7 @@ class MyPlayerTest {
     }
     @Test
     public void playerSetterTest() {
-        Player p = new Player();
+       // Player p = new Player();
         p.setIndex(4);
         assertTrue(p.getIndex() == 3);
         p.setIndex(1);
@@ -44,7 +54,7 @@ class MyPlayerTest {
 
 @Test
     public void playerGeneratePosition() {
-        Player p = new Player();
+       // Player p = new Player();
 
     p.setIndex(1);
     assertTrue(p.generatePosition(1).equals("^-"));
@@ -60,7 +70,7 @@ class MyPlayerTest {
 
     @Test
     public void playerIsDeadTest() {
-        Player p = new Player();
+       // Player p = new Player();
         EnemyPattern ep = new EnemyPattern(1);
         if(ep.getPattern().equals("@*")) {
             p.setIndex(1);

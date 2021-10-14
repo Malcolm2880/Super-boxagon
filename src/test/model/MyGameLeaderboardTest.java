@@ -1,15 +1,26 @@
 package model;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MyGameLeaderboardTest {
 
+    Leaderboard l ;
+    Score s;
+    @BeforeEach
+    public void runBefore() {
+       l = new Leaderboard();
+       s = new Score("bob", 0);
+
+    }
+
+
     @Test
     public void leaderBoardConstructorTest() {
-        Leaderboard l = new Leaderboard();
-        Score s = new Score("bob",0);
+        // Leaderboard l = new Leaderboard();
+        //Score s = new Score("bob",0);
         l.addScore(s);
         assertEquals("The Leaderboard is as follows:" + "\n" + "bob 0", l.getAllScores());
 
@@ -20,8 +31,8 @@ class MyGameLeaderboardTest {
 
     @Test
     public void leaderBoardAddTest() {
-        Leaderboard l = new Leaderboard();
-        Score s = new Score("bob", 0);
+      //  Leaderboard l = new Leaderboard();
+        //Score s = new Score("bob", 0);
         l.addScore(s);
         assertEquals("The Leaderboard is as follows:" + "\n" + "bob 0", l.getAllScores());
        l.addScore(new Score("bobby", 10));
@@ -34,9 +45,9 @@ class MyGameLeaderboardTest {
     }
     @Test
     public void leaderBoardGetAllTest() {
-        Leaderboard l = new Leaderboard();
+        //Leaderboard l = new Leaderboard();
         assertEquals("The Leaderboard is as follows:", l.getAllScores());
-        Score s = new Score("bob", 0);
+        //Score s = new Score("bob", 0);
         l.addScore(s);
         assertEquals("The Leaderboard is as follows:" + "\n" + "bob 0", l.getAllScores());
         l.addScore(new Score("bobby", 10));
@@ -45,8 +56,8 @@ class MyGameLeaderboardTest {
     }
     @Test
     public void leaderBoardGetTopTest() {
-        Leaderboard l = new Leaderboard();
-        Score s = new Score("bob", 0);
+      //  Leaderboard l = new Leaderboard();
+        //Score s = new Score("bob", 0);
         l.addScore(s);
         assertEquals("bob 0", l.getTopScore());
 
@@ -62,8 +73,8 @@ class MyGameLeaderboardTest {
 
     @Test
     public void leaderBoardGetNamesScoreTest() {
-        Leaderboard l = new Leaderboard();
-        Score s = new Score("bob", 0);
+      //  Leaderboard l = new Leaderboard();
+        //Score s = new Score("bob", 0);
         l.addScore(s);
         assertEquals(1, l.getNamesScore("bob"));
         l.addScore(new Score("bob", -5));

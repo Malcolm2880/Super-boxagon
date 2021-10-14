@@ -2,10 +2,10 @@ package ui;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
 import model.*;
 
 import java.util.Scanner;
-
 
 
 // Note that the GameApp structure is based on the TellerApp project
@@ -18,6 +18,12 @@ public class GameApp {
     private Player player;
     private int currentScore;
 
+    // EFFECTS: processes user command
+    public GameApp() {
+        startRunning();
+    }
+
+
     // REQUIRES: User input a movement value that is an integer.
 // MODIFIES: this
     // EFFECTS: allows you to actually play the game.
@@ -29,7 +35,7 @@ public class GameApp {
             System.out.println(enemy.getPattern());
             System.out.println(player.generatePosition(difficulty));
             Timer t = new Timer();
-            t.schedule(setupTimer(player),10 * 1000);
+            t.schedule(setupTimer(player), 10 * 1000);
             player.setIndex(input.nextInt());
             if (timeOut) {
                 System.out.println("Your input was too late");
@@ -87,10 +93,9 @@ public class GameApp {
 
     }
 
-
-// taken from the teller class example
-    // EFFECTS: processes user command
-    public GameApp() {
+    // taken from the teller class example
+    //EFFECTS: processes user command
+    public void startRunning() {
         boolean keepGoing = true;
         String command = null;
 
@@ -110,6 +115,7 @@ public class GameApp {
 
         System.out.println("\nGoodbye!");
     }
+
 
     // silghtly modified from the teller method with the same name
     // MODIFIES: this
@@ -158,7 +164,7 @@ public class GameApp {
     // EFFECTS: displays the top score with the given name
     private void showTopScore() {
         System.out.println("Please enter your name");
-        int index =  board.getNamesScore(input.next());
+        int index = board.getNamesScore(input.next());
         if (index > 0) {
             System.out.println("Your highest score is at position: " + index);
         } else {

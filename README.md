@@ -17,3 +17,13 @@ The application I want to make is a short and fast game. It will be challenging 
 - As a user, I want to dodge enemies
 - As a user, I want to be able to change the difficulty
 - As a user, I want to add my times to a leaderboard
+
+
+
+
+## Rules
+during the game there will be 2 kinds of objects, spikes and portals.
+You must input the index you wish to avoiding spikes along the way. The more portals you pass the more points you get.
+Beware that the number of spikes will increase as you gain more score.
+Also to note, that if you fail to input an index in time, the portal will close, and you will die.
+If you also input an invalid index then you also die.
