@@ -27,7 +27,7 @@ public class GameApp {
     // REQUIRES: User input a movement value that is an integer.
 // MODIFIES: this
     // EFFECTS: allows you to actually play the game.
-    private void runGame() {
+    public void runGame() {
         boolean alive = true;
         resetGame();
         while (alive) {
@@ -43,11 +43,11 @@ public class GameApp {
                 break;
             }
             t.cancel();
-            if (player.getIndex() > difficulty || player.getIndex() < 0 || player.isDead(enemy)) {
+            if (player.getIndex() > difficulty || player.isDead(enemy)) {
                 System.out.println("You died!");
                 break;
             }
-            currentScore = currentScore + difficultyIncrease(currentScore);
+            currentScore = currentScore + difficultySpike(currentScore);
         }
         difficulty = 1;
 
@@ -56,7 +56,7 @@ public class GameApp {
     // MODIFIES: this
     // EFFECTS: resets game variables back to default
 
-    private void resetGame() {
+    public void resetGame() {
         currentScore = 0;
         player = new Player();
         timeOut = false;
@@ -64,7 +64,7 @@ public class GameApp {
 
     //MODIFIES: this
     //EFFECTS: Increases the difficulty at incremental rates.
-    private int difficultyIncrease(int score) {
+    public int difficultySpike(int score) {
         if (score % 3 == 0) {
             difficulty++;
         }
@@ -73,7 +73,7 @@ public class GameApp {
     // MODIFIES: this
     // EFFECTS: creates a new score with the given value
 
-    private void createScore(int score) {
+    public void createScore(int score) {
         System.out.println("Give your score a name:");
         board.addScore(new Score(input.next(), score));
 
@@ -81,7 +81,7 @@ public class GameApp {
 
     // MODIFIES: this
     // EFFECTS: setups the timer
-    private TimerTask setupTimer(Player p) {
+    public TimerTask setupTimer(Player p) {
 
 
         TimerTask tt = new TimerTask() {
@@ -95,7 +95,7 @@ public class GameApp {
 
     // taken from the teller class example
     //EFFECTS: processes user command
-    private void startRunning() {
+    public void startRunning() {
         boolean keepGoing = true;
         String command = null;
 
@@ -172,30 +172,12 @@ public class GameApp {
         }
     }
 
-    //Some of the code structure taken from the teller class
+
     // MODIFIES: this
     // EFFECTS: changes the difficulty
     private void changeDifficulty() {
-        System.out.println("Type I if you want to increase the difficulty");
-        System.out.println("Type L if you want to lower the difficulty");
-        String command = input.next();
-        command = command.toLowerCase();
-
-        if (command.equals("i")) {
-            System.out.println("Your difficulty was increased by one, Good luck!");
-            difficulty++;
-        } else if (command.equals("l")) {
-            if (difficulty == 1) {
-                System.out.println("It's as low as it can go!");
-            } else {
-                System.out.println("Your difficulty was lowered by one");
-                difficulty--;
-            }
-
-        } else {
-            System.out.println("Invalid Command!");
-
-        }
+        System.out.println("Your difficulty was increased by one, Good luck!");
+        difficulty++;
 
 
     }
