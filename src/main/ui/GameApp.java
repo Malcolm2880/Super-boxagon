@@ -18,6 +18,7 @@ public class GameApp {
     private Player player;
     private int currentScore;
 
+    //xd
     // EFFECTS: processes user command
     public GameApp() {
         startRunning();
