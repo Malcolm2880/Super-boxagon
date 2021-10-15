@@ -7,6 +7,10 @@ import model.*;
 
 import java.util.Scanner;
 
+// This class references code from this repo
+// Link: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
+//whenever the teller project is mentioned, this is what is being referred to.
+
 
 // Note that the GameApp structure is based on the TellerApp project
 //this class runs the whole program. It interacts with the other classes to deliver the full user experience.
