@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 
 // Note that the GameApp structure is based on the TellerApp project
-
+//this class runs the whole program. It interacts with the other classes to deliver the full user experience.
 public class GameApp {
     private Scanner input;
     private Leaderboard board;
