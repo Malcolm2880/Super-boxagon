@@ -1,17 +1,14 @@
 package model;
-
-//Score class that stores the scores and names associated with them
+//stores scores
 
 public class Score {
     private String name;
     private int score;
 
-    //EFFECTS: Creates a Score object with the given name and score values
-    public Score(String name, int score) {
-        this.name = name;
-        this.score = score;
+    public Score(String n, int s) {
+        name = n;
+        score = s;
     }
-
 
     public String getName() {
         return name;
