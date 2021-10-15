@@ -18,8 +18,8 @@ public class GameApp {
     private Player player;
     private int currentScore;
 
-    //xd
-    // EFFECTS: processes user command
+
+    // EFFECTS: Starts the program
     public GameApp() {
         startRunning();
     }
@@ -184,6 +184,8 @@ public class GameApp {
 
         if (command.equals("i")) {
             System.out.println("Your difficulty was increased by one, Good luck!");
+            System.out.println("Note that your difficulty will be reset on death");
+
             difficulty++;
         } else if (command.equals("l")) {
             if (difficulty == 1) {
@@ -197,6 +199,7 @@ public class GameApp {
             System.out.println("Invalid Command!");
 
         }
+
 
 
     }

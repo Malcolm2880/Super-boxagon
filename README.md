@@ -14,7 +14,7 @@ The application I want to make is a short and fast game. It will be challenging 
 
 ## User Stories
 - As a user, I want to check my best score
-- As a user, I want to succesfully play the game
+- As a user, I want to successfully play the game
 - As a user, I want to be able to change the difficulty
 - As a user, I want to add my Scores to a leaderboard
 
