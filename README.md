@@ -18,6 +18,9 @@ The application I want to make is a short and fast game. It will be challenging 
 - As a user, I want to be able to change the difficulty
 - As a user, I want to add my Scores to a leaderboard
 
+## Phase 2 User Stories
+- As a user, I want to save the entire leaderboard to a file
+- As a user, I want to load a saved leaderboard
 
 
 
