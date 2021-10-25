@@ -1,9 +1,14 @@
 package ui;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import java.util.Scanner;
 
@@ -16,15 +21,20 @@ import java.util.Scanner;
 //this class runs the whole program. It interacts with the other classes to deliver the full user experience.
 public class GameApp {
     private Scanner input;
+
     private Leaderboard board;
     private int difficulty = 1;
     private boolean timeOut = false;
     private Player player;
     private int currentScore;
 
+    private static final String JSON_STORE = "./data/MyProject.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
 
     // EFFECTS: Starts the program
-    public GameApp() {
+    public GameApp() throws FileNotFoundException {
         startRunning();
     }
 
@@ -134,6 +144,10 @@ public class GameApp {
             showTopScore();
         } else if (command.equals("s")) {
             runGame();
+        }  else if (command.equals("l")) {
+            loadGameApp();
+        } else if (command.equals("a")) {
+            saveGameApp();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -145,6 +159,8 @@ public class GameApp {
     private void init() {
         board = new Leaderboard();
         input = new Scanner(System.in);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         input.useDelimiter("\n");
     }
 
@@ -156,6 +172,8 @@ public class GameApp {
         System.out.println("\tt -> Your Top Score");
         System.out.println("\td -> Change Difficulty");
         System.out.println("\ts -> Start the game");
+        System.out.println("\tl -> Load Highscore");
+        System.out.println("\ta -> Save Highscore");
         System.out.println("\tq -> quit");
     }
 
@@ -207,5 +225,29 @@ public class GameApp {
 
 
     }
+    // EFFECTS: saves the workroom to file
+
+    private void saveGameApp() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(board);
+            jsonWriter.close();
+            System.out.println("Saved " + /*workRoom.getName()*/ "Leaderboard " + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void loadGameApp() {
+        try {
+            board = jsonReader.read();
+            System.out.println("Loaded " + /*workRoom.getName()*/ "Leaderboard " + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
 
 }

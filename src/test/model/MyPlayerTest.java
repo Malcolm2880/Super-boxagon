@@ -23,7 +23,7 @@ class MyPlayerTest {
     @Test
     public void playerConstructorTest() {
        // Player p = new Player();
-        assertTrue(p.getIndex() == 3);
+        assertTrue(p.getIndex() == 0);
 
         // System.out.println(l.getAllScores());
 
@@ -32,7 +32,7 @@ class MyPlayerTest {
     @Test
     public void playerGetterTest() {
        // Player p = new Player();
-        assertTrue(p.getIndex() == 3);
+        assertTrue(p.getIndex() == 0);
         p.setIndex(5);
         assertTrue(p.getIndex() == 4);
         p.setIndex(1);

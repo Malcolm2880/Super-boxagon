@@ -28,6 +28,25 @@ class MyGameLeaderboardTest {
 
     }
 
+    @Test
+    public void leaderBoardGetSizeTest() {
+        // Leaderboard l = new Leaderboard();
+        //Score s = new Score("bob",0);
+        assertEquals(0,l.getSize());
+
+        l.addScore(s);
+     //   assertEquals("The Leaderboard is as follows:" + "\n" + "bob 0", l.getAllScores());
+        // System.out.println(l.getAllScores());
+        assertEquals(1,l.getSize());
+        l.addScore(s);
+        l.addScore(s);
+        l.addScore(s);
+        l.addScore(s);
+        assertEquals(5,l.getSize());
+
+
+    }
+
 
     @Test
     public void leaderBoardAddTest() {

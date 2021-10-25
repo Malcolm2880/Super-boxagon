@@ -7,7 +7,7 @@ public class Player {
     //EFFECTS: Creates a player, with the default index of 3.
     //Note that in actual implementation, this value is more accurately a value of 2.
     public Player() {
-        index = 3;
+        index = 0;
     }
 
 

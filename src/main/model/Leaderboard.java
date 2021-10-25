@@ -1,16 +1,28 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.*;
 
 //Class that stores Scores, and allows retrieval of Scores.
 //Note that scores are automatically inputted in a sorted order.
 
-public class Leaderboard {
+public class Leaderboard implements Writable {
+
+
     ArrayList<Score> names;
+
 
     // EFFECTS: Creates an empty leaderboard.
     public Leaderboard() {
         names = new ArrayList<Score>();
+    }
+
+
+    public int getSize() {
+        return names.size();
     }
 
     // REQUIRES: Score be not null, and have a proper name and value
@@ -69,5 +81,29 @@ public class Leaderboard {
             index++;
         }
         return -1;
+    }
+
+
+    //Note this method is almost completely ripped from
+//Github:https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Scores", scoresToJson());
+        return json;
+    }
+
+    //Note this method is almost completely ripped from
+    //Github:https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+
+    private JSONArray scoresToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Score s : names) {
+            jsonArray.put(s.toJson());
+        }
+
+        return jsonArray;
     }
 }

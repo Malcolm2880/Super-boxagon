@@ -2,7 +2,10 @@ package model;
 
 //Score class that stores the scores and names associated with them
 
-public class Score {
+import org.json.JSONObject;
+import persistence.Writable;
+
+public class Score implements Writable {
     private String name;
     private int score;
 
@@ -21,6 +24,11 @@ public class Score {
     }
 
 
-
-
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("score", score);
+        return json;
+    }
 }
