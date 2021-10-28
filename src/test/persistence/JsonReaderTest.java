@@ -48,5 +48,17 @@ class JsonReaderTest {
             fail("Couldn't read from file");
         }
     }
+
+    @Test
+    void testReaderDifficulty() {
+        JsonReader reader = new JsonReader("./data/MyDifficultyTest.json");
+        try {
+            int d = reader.readInt();
+            assertEquals(1, d);
+
+        } catch (IOException e) {
+            fail("Couldn't read from file");
+        }
+    }
 }
 

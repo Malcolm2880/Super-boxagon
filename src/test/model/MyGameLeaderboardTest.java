@@ -2,8 +2,13 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 //Tests the leaderboard class
 class MyGameLeaderboardTest {
 
@@ -104,5 +109,53 @@ class MyGameLeaderboardTest {
         assertEquals(-1, l.getNamesScore("chara"));
 
 
+    }
+
+    @Test
+    void generalLeaderboardToJsonTest() {
+        try {
+            Leaderboard lb = new Leaderboard();
+            JsonWriter writer = new JsonWriter("./data/Empty.json");
+            writer.open();
+            writer.write(lb);
+            writer.close();
+            Leaderboard lb2 = new Leaderboard();
+
+            JsonReader reader = new JsonReader("./data/Empty.json");
+            assertTrue(lb2.toJson().toString().equals(reader.read().toJson().toString()));
+            lb = reader.read();
+            assertEquals(0, lb.getSize());
+
+        } catch (IOException e) {
+            fail("Exception should not have been thrown");
+        }
+    }
+    @Test
+    void generalLeaderboardScoresToJsonTest() {
+        try {
+            Leaderboard lb = new Leaderboard();
+            lb.addScore(new Score( "Frisk" , 2));
+            lb.addScore(new Score( "Chara" , 13));
+            lb.addScore(new Score( "Kris" , 5));
+
+            JsonWriter writer = new JsonWriter("./data/General.json");
+            writer.open();
+            writer.write(lb);
+            writer.close();
+            Leaderboard lb2 = new Leaderboard();
+            lb2.addScore(new Score( "Frisk" , 2));
+            lb2.addScore(new Score( "Chara" , 13));
+            lb2.addScore(new Score( "Kris" , 5));
+
+            JsonReader reader = new JsonReader("./data/General.json");
+            assertTrue(lb2.toJson().getJSONArray("Scores").toString().equals(reader.read().toJson().getJSONArray("Scores").toString()));
+            lb = reader.read();
+
+            assertEquals("The Leaderboard is as follows:" + "\n" + "Chara 13" + "\n" + "Kris 5" + "\n" + "Frisk 2",lb.getAllScores());
+
+
+        } catch (IOException e) {
+            fail("Exception should not have been thrown");
+        }
     }
 }

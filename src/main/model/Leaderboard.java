@@ -86,7 +86,7 @@ public class Leaderboard implements Writable {
 
     //Note this method is almost completely ripped from
 //Github:https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
-
+//EFFECTS: returns the conversion of the current object to a persistent object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -96,8 +96,8 @@ public class Leaderboard implements Writable {
 
     //Note this method is almost completely ripped from
     //Github:https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
-
-    private JSONArray scoresToJson() {
+    // EFFECTS: returns Scores in this leaderboard as a JSON array
+    public JSONArray scoresToJson() {
         JSONArray jsonArray = new JSONArray();
 
         for (Score s : names) {

@@ -16,6 +16,10 @@ import java.util.Scanner;
 // Link: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
 //whenever the teller project is mentioned, this is what is being referred to.
 
+//Note that the file reading and writing code is adapted from the following repo
+// Link: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+// Whenever the "JsonDemo" repo is mentioned, this is what is being referred to.
+
 
 // Note that the GameApp structure is based on the TellerApp project
 //this class runs the whole program. It interacts with the other classes to deliver the full user experience.
@@ -31,6 +35,11 @@ public class GameApp {
     private static final String JSON_STORE = "./data/MyProject.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
+
+
+    private static final String JSON_STORE_D = "./data/MyDifficultyTest.json";
+    private JsonWriter jsonWriterD;
+    private JsonReader jsonReaderD;
 
 
     // EFFECTS: Starts the program
@@ -148,6 +157,10 @@ public class GameApp {
             loadGameApp();
         } else if (command.equals("a")) {
             saveGameApp();
+        }  else if (command.equals("o")) {
+            saveDifficulty();
+        } else if (command.equals("p")) {
+            loadDifficulty();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -161,6 +174,8 @@ public class GameApp {
         input = new Scanner(System.in);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+        jsonWriterD = new JsonWriter(JSON_STORE_D);
+        jsonReaderD = new JsonReader(JSON_STORE_D);
         input.useDelimiter("\n");
     }
 
@@ -174,6 +189,8 @@ public class GameApp {
         System.out.println("\ts -> Start the game");
         System.out.println("\tl -> Load Highscore");
         System.out.println("\ta -> Save Highscore");
+        System.out.println("\tp -> Load Difficulty");
+        System.out.println("\to -> Save Difficulty");
         System.out.println("\tq -> quit");
     }
 
@@ -225,6 +242,10 @@ public class GameApp {
 
 
     }
+
+
+    // Adapted from the JsonDemo project
+    //MODIFIES: this
     // EFFECTS: saves the workroom to file
 
     private void saveGameApp() {
@@ -238,6 +259,35 @@ public class GameApp {
         }
     }
 
+    //Adapted from the JsonDemo project
+    //MODIFIES: this
+    //EFFECTS: saves the difficulty to a file
+
+    private void saveDifficulty() {
+        try {
+            jsonWriterD.open();
+            jsonWriterD.write(difficulty);
+            jsonWriterD.close();
+            System.out.println("Saved " +  "Difficulty " + " to " + JSON_STORE_D);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE_D);
+        }
+    }
+
+    //Adapted from the JsonDemo project
+    // MODIFIES: this
+    // EFFECTS: loads difficulty from file
+    private void loadDifficulty() {
+        try {
+            difficulty = jsonReaderD.readInt();
+            System.out.println("Loaded " +  "Difficulty " + " from " + JSON_STORE_D);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE_D);
+        }
+    }
+
+
+    //Adapted from the Json
     // MODIFIES: this
     // EFFECTS: loads workroom from file
     private void loadGameApp() {

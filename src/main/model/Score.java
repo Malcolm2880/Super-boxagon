@@ -24,6 +24,9 @@ public class Score implements Writable {
     }
 
 
+    //Note this method is almost completely ripped from
+    //Github:https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+    // EFFECTS: returns Scores in this leaderboard as a JSON array
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

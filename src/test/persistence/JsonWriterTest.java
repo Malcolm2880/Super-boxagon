@@ -73,5 +73,27 @@ class JsonWriterTest  {
             fail("Exception should not have been thrown");
         }
     }
+
+    @Test
+    void testWriterDifficulty() {
+        try {
+
+
+            JsonWriter writer = new JsonWriter("./data/MyDifficultyTest.json");
+            writer.open();
+            writer.write(1);
+            writer.close();
+
+            JsonReader reader = new JsonReader("./data/MyDifficultyTest.json");
+            int d = reader.readInt();
+            assertEquals(1, d);
+
+          //  assertEquals("The Leaderboard is as follows:" + "\n" + "Chara 13" + "\n" + "Kris 5" + "\n" + "Frisk 2",lb.getAllScores());
+
+
+        } catch (IOException e) {
+            fail("Exception should not have been thrown");
+        }
+    }
 }
 

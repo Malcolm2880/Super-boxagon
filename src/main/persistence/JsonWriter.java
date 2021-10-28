@@ -9,7 +9,7 @@ import java.io.*;
 //Note this class is almost completely ripped from
 //Github:https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 
-// Represents a writer that writes JSON representation of workroom to file
+// Represents a writer that writes JSON representation of leaderboard to file
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
@@ -31,6 +31,14 @@ public class JsonWriter {
     // EFFECTS: writes JSON representation of leaderboard to file
     public void write(Leaderboard wr) {
         JSONObject json = wr.toJson();
+        saveToFile(json.toString(TAB));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: writes JSON representation of leaderboard to file
+    public void write(int d) {
+        JSONObject json = new JSONObject();
+        json.put("Difficulty",d);
         saveToFile(json.toString(TAB));
     }
 
