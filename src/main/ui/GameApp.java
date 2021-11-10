@@ -1,15 +1,21 @@
 package ui;
 
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+import ui.tools.*;
 
+import javax.swing.*;
 import java.util.Scanner;
 
 // This class references code from this repo
@@ -23,9 +29,16 @@ import java.util.Scanner;
 
 // Note that the GameApp structure is based on the TellerApp project
 //this class runs the whole program. It interacts with the other classes to deliver the full user experience.
-public class GameApp {
+public class GameApp extends JFrame {
     private Scanner input;
 
+    ArrayList<Tool> tools;
+
+    public JPanel getBoardArea() {
+        return boardArea;
+    }
+
+    JPanel boardArea;
     private Leaderboard board;
     private int difficulty = 1;
     private boolean timeOut = false;
@@ -40,6 +53,105 @@ public class GameApp {
     private static final String JSON_STORE_D = "./data/MyDifficultyTest.json";
     private JsonWriter jsonWriterD;
     private JsonReader jsonReaderD;
+
+
+    //https://www.tutorialspoint.com/swingexamples/show_input_dialog_text.htm
+    public String createName() {
+        String name = (String) JOptionPane.showInputDialog(
+                this,
+                "Type a name",
+                "Score Creator",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                "bob"
+        );
+        return name;
+    }
+
+    public int createPoints() {
+        String score = (String) JOptionPane.showInputDialog(
+                this,
+                "Type a name",
+                "Score Creator",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                "10"
+        );
+        int s = Integer.parseInt(score);
+        return s;
+    }
+
+
+    private void createButtons() throws FileNotFoundException {
+
+
+        JPanel toolArea = new JPanel();
+
+        tools = new ArrayList<>();
+        toolArea.setLayout(new GridLayout(0, 1));
+        toolArea.setSize(new Dimension(10, 10));
+        add(toolArea, BorderLayout.SOUTH);
+
+        displayLeaderboard();
+
+        StartGameButton gameButton = new StartGameButton(this, toolArea);
+        tools.add(gameButton);
+
+        TopScoreButton topScore = new TopScoreButton(this, toolArea);
+        tools.add(topScore);
+
+        LoadFileButton loadFile = new LoadFileButton(this, toolArea);
+        tools.add(loadFile);
+
+        SaveFileButton saveFile = new SaveFileButton(this, toolArea);
+        tools.add(saveFile);
+
+        AddScoreButton addScore = new AddScoreButton(this, toolArea);
+        tools.add(addScore);
+
+
+    }
+
+    public void displayLeaderboard() {
+
+        if (boardArea != null) {
+            this.remove(boardArea);
+            System.out.println("Trigger");
+        }
+
+        boardArea = new JPanel();
+        boardArea.setLayout(new GridLayout(0, 1));
+        boardArea.setSize(new Dimension(10, 10));
+
+
+
+        add(boardArea, BorderLayout.NORTH);
+
+        JLabel title = new JLabel("The Current Leaderboard is as follows:");
+        boardArea.add(title);
+
+        for (Score s : board.getNames()) {
+            JLabel topScore2 = new JLabel(s.getName());
+            boardArea.add(topScore2);
+        }
+        boardArea.revalidate();
+        add(boardArea);
+
+
+    }
+
+
+    private void initializeGraphics() throws FileNotFoundException {
+        setLayout(new BorderLayout());
+        setMinimumSize(new Dimension(1000, 700));
+        createButtons();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setVisible(true);
+
+    }
 
 
     // EFFECTS: Starts the program
@@ -77,6 +189,13 @@ public class GameApp {
 
         createScore(currentScore);
     }
+
+
+
+
+
+
+
     // MODIFIES: this
     // EFFECTS: resets game variables back to default
 
@@ -103,6 +222,12 @@ public class GameApp {
 
     }
 
+    public void createScore(String name, int score) {
+        board.addScore(new Score(name, score));
+        displayLeaderboard();
+
+    }
+
     // MODIFIES: this
     // EFFECTS: setups the timer
     private TimerTask setupTimer(Player p) {
@@ -117,15 +242,18 @@ public class GameApp {
 
     }
 
+
     // taken from the teller class example
     //EFFECTS: processes user command
-    private void startRunning() {
+    private void startRunning() throws FileNotFoundException {
         boolean keepGoing = true;
         String command = null;
 
         init();
 
+
         while (keepGoing) {
+
             displayMenu();
             command = input.next();
             command = command.toLowerCase();
@@ -138,6 +266,8 @@ public class GameApp {
         }
 
         System.out.println("\nGoodbye!");
+
+
     }
 
 
@@ -153,11 +283,11 @@ public class GameApp {
             showTopScore();
         } else if (command.equals("s")) {
             runGame();
-        }  else if (command.equals("l")) {
+        } else if (command.equals("l")) {
             loadGameApp();
         } else if (command.equals("a")) {
             saveGameApp();
-        }  else if (command.equals("o")) {
+        } else if (command.equals("o")) {
             saveDifficulty();
         } else if (command.equals("p")) {
             loadDifficulty();
@@ -169,8 +299,10 @@ public class GameApp {
     // taken from the teller class
     // MODIFIES: this
     // EFFECTS: initializes accounts
-    private void init() {
+    private void init() throws FileNotFoundException {
         board = new Leaderboard();
+        initializeGraphics();
+
         input = new Scanner(System.in);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
@@ -202,7 +334,7 @@ public class GameApp {
     }
 
     // EFFECTS: displays the top score with the given name
-    private void showTopScore() {
+    public void showTopScore() {
         System.out.println("Please enter your name");
         int index = board.getNamesScore(input.next());
         if (index > 0) {
@@ -212,10 +344,30 @@ public class GameApp {
         }
     }
 
+    public void frameShowTopScore() {
+        String name = (String) JOptionPane.showInputDialog(
+                this,
+                "Type a name",
+                "Score Finder",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                "bob"
+        );
+        int index = board.getNamesScore(name);
+        if (index > 0) {
+            JOptionPane.showMessageDialog(this, "The highest score with that name is " + index);
+        } else {
+            JOptionPane.showMessageDialog(this, "No one has that name!");
+
+        }
+    }
+
+
     //Some of the code structure taken from the teller class
     // MODIFIES: this
     // EFFECTS: changes the difficulty
-    private void changeDifficulty() {
+    public void changeDifficulty() {
         System.out.println("Type I if you want to increase the difficulty");
         System.out.println("Type L if you want to lower the difficulty");
         String command = input.next();
@@ -240,7 +392,6 @@ public class GameApp {
         }
 
 
-
     }
 
 
@@ -248,7 +399,7 @@ public class GameApp {
     //MODIFIES: this
     // EFFECTS: saves the workroom to file
 
-    private void saveGameApp() {
+    public void saveGameApp() {
         try {
             jsonWriter.open();
             jsonWriter.write(board);
@@ -268,7 +419,7 @@ public class GameApp {
             jsonWriterD.open();
             jsonWriterD.write(difficulty);
             jsonWriterD.close();
-            System.out.println("Saved " +  "Difficulty " + " to " + JSON_STORE_D);
+            System.out.println("Saved " + "Difficulty " + " to " + JSON_STORE_D);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE_D);
         }
@@ -280,7 +431,7 @@ public class GameApp {
     private void loadDifficulty() {
         try {
             difficulty = jsonReaderD.readInt();
-            System.out.println("Loaded " +  "Difficulty " + " from " + JSON_STORE_D);
+            System.out.println("Loaded " + "Difficulty " + " from " + JSON_STORE_D);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE_D);
         }
@@ -290,7 +441,7 @@ public class GameApp {
     //Adapted from the Json
     // MODIFIES: this
     // EFFECTS: loads workroom from file
-    private void loadGameApp() {
+    public void loadGameApp() {
         try {
             board = jsonReader.read();
             System.out.println("Loaded " + /*workRoom.getName()*/ "Leaderboard " + " from " + JSON_STORE);

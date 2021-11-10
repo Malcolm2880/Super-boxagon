@@ -1,1 +1,10 @@
-{"Difficulty": 1}
+{"Scores": [
+    {
+        "score": 100,
+        "name": "bob"
+    },
+    {
+        "score": 10,
+        "name": "bob"
+    }
+]}

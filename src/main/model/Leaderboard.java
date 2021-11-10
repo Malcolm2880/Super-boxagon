@@ -15,6 +15,10 @@ public class Leaderboard implements Writable {
     ArrayList<Score> names;
 
 
+    public ArrayList<Score> getNames() {
+        return names;
+    }
+
     // EFFECTS: Creates an empty leaderboard.
     public Leaderboard() {
         names = new ArrayList<Score>();
