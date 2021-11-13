@@ -1,13 +1,14 @@
 package ui.tools;
 
 
-
 import ui.GameApp;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 
+// Tool is taken from the "simple drawing player" project
+//the code has been modified to remove unneeded methods
 
 public abstract class Tool {
 
@@ -15,8 +16,8 @@ public abstract class Tool {
     protected GameApp current;
     private boolean active;
 
-
-    public Tool(GameApp current, JComponent parent) throws FileNotFoundException {
+    //EFFECTS: Creates a Tool object that manages the buttons
+    public Tool(GameApp current, JComponent parent) {
 
         this.current = current;
         createButton(parent);
@@ -34,21 +35,6 @@ public abstract class Tool {
         return button;
     }
 
-    // getters
-    public boolean isActive() {
-        return active;
-    }
-
-    // EFFECTS: sets this Tool's active field to true
-    public void activate() {
-        active = true;
-    }
-
-    // EFFECTS: sets this Tool's active field to false
-    public void deactivate() {
-        active = false;
-    }
-
     // EFFECTS: creates button to activate tool
     protected abstract void createButton(JComponent parent);
 
@@ -61,16 +47,5 @@ public abstract class Tool {
         parent.add(button);
     }
 
-    // EFFECTS: default behaviour does nothing
-    public void mousePressedInDrawingArea(MouseEvent e) {}
-
-    // EFFECTS: default behaviour does nothing
-    public void mouseReleasedInDrawingArea(MouseEvent e) {}
-
-    // EFFECTS: default behaviour does nothing
-    public void mouseClickedInDrawingArea(MouseEvent e) {}
-
-    // EFFECTS: default behaviour does nothing
-    public void mouseDraggedInDrawingArea(MouseEvent e) {}
 
 }

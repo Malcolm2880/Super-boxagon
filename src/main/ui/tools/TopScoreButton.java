@@ -1,8 +1,6 @@
 package ui.tools;
 
 
-
-
 import ui.GameApp;
 
 import javax.swing.*;
@@ -12,27 +10,26 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 
+//This class has been taken and modified from the simple Drawing project
+
 public class TopScoreButton extends Tool {
 
-    public TopScoreButton(GameApp current, JComponent parent) throws FileNotFoundException {
+
+    //EFFECTS: Creates the top score button using parent class
+
+    public TopScoreButton(GameApp current, JComponent parent) {
         super(current, parent);
     }
 
 
-
     // MODIFIES: this
-    // EFFECTS:  creates a new "Play Shape" button and invokes addToParent() on the
+    // EFFECTS:  creates a new "Top Score" button and invokes addToParent() on the
     //           parent passed to this method
     @Override
     protected void createButton(JComponent parent) {
         button = new JButton("Get Top Score");
         button = customizeButton(button);
         addToParent(parent);
-    }
-
-
-    public void mouseReleased(MouseEvent e) {
-
     }
 
 
@@ -48,7 +45,7 @@ public class TopScoreButton extends Tool {
         // EFFECTS: gets the top score
         @Override
         public void actionPerformed(ActionEvent e) {
-         current.frameShowTopScore();
+            current.frameShowTopScore();
 
         }
     }

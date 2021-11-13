@@ -10,15 +10,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 
+
+
+//This class has been taken and modified from the simple Drawing project
 public class AddScoreButton extends Tool {
 
-    public AddScoreButton(GameApp current, JComponent parent) throws FileNotFoundException {
+
+    //EFFECTS: Creates the add score button using parent class
+    public AddScoreButton(GameApp current, JComponent parent)  {
         super(current, parent);
     }
 
 
     // MODIFIES: this
-    // EFFECTS:  creates a new "Play Shape" button and invokes addToParent() on the
+    // EFFECTS:  creates a new "Add Score" button and invokes addToParent() on the
     //           parent passed to this method
     @Override
     protected void createButton(JComponent parent) {
@@ -37,6 +42,7 @@ public class AddScoreButton extends Tool {
 
     private class ButtonToolClickHandler implements ActionListener {
 
+        //MODIFIES: current
         // EFFECTS: gets the top score
         @Override
         public void actionPerformed(ActionEvent e) {

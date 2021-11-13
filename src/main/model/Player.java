@@ -4,8 +4,8 @@ package model;
 public class Player {
     private int index = 0;
 
-    //EFFECTS: Creates a player, with the default index of 3.
-    //Note that in actual implementation, this value is more accurately a value of 2.
+    //EFFECTS: Creates a player, with the default index of 0.
+
     public Player() {
         index = 0;
     }

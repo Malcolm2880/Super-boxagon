@@ -11,15 +11,23 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 
+
+
+//This class has been taken and modified from the simple Drawing project
+
 public class StartGameButton extends Tool {
 
-    public StartGameButton(GameApp current, JComponent parent) throws FileNotFoundException {
+
+
+    //EFFECTS: Creates the start game button using parent class
+
+    public StartGameButton(GameApp current, JComponent parent) {
         super(current, parent);
     }
 
 
     // MODIFIES: this
-    // EFFECTS:  creates a new "Play Shape" button and invokes addToParent() on the
+    // EFFECTS:  creates a new "Start game button" button and invokes addToParent() on the
     //           parent passed to this method
     @Override
     protected void createButton(JComponent parent) {
@@ -38,19 +46,12 @@ public class StartGameButton extends Tool {
 
     private class ButtonToolClickHandler implements ActionListener {
 
-        // EFFECTS: gets the top score
+        //MODIFIES: current
+        // EFFECTS: starts the game
+
         @Override
         public void actionPerformed(ActionEvent e) {
-            JFrame game = new JFrame();
-            game.setLayout(new BorderLayout());
-            game.setMinimumSize(new Dimension(300, 300));
-
-
-
-
-            game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            game.setLocationRelativeTo(null);
-            game.setVisible(true);
+            current.runGame();
         }
     }
 }

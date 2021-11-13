@@ -3,6 +3,7 @@ package ui;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 import ui.tools.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.util.Scanner;
 
@@ -29,16 +31,19 @@ import java.util.Scanner;
 
 // Note that the GameApp structure is based on the TellerApp project
 //this class runs the whole program. It interacts with the other classes to deliver the full user experience.
+
+//THis class also references the simple drawing project
+
 public class GameApp extends JFrame {
     private Scanner input;
 
+
+    BufferedImage image;
     ArrayList<Tool> tools;
 
-    public JPanel getBoardArea() {
-        return boardArea;
-    }
 
     JPanel boardArea;
+    JPanel imageArea;
     private Leaderboard board;
     private int difficulty = 1;
     private boolean timeOut = false;
@@ -55,36 +60,25 @@ public class GameApp extends JFrame {
     private JsonReader jsonReaderD;
 
 
-    //https://www.tutorialspoint.com/swingexamples/show_input_dialog_text.htm
+    //EFFECTS: opens a option panel and accepts a name
     public String createName() {
-        String name = (String) JOptionPane.showInputDialog(
-                this,
-                "Type a name",
-                "Score Creator",
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                null,
-                "bob"
-        );
+        String name = JOptionPane.showInputDialog("enter a name");
         return name;
     }
 
+    //REQUIRES: input be a number
+    //EFFECTS: opens a option panel and accepts a number
     public int createPoints() {
-        String score = (String) JOptionPane.showInputDialog(
-                this,
-                "Type a name",
-                "Score Creator",
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                null,
-                "10"
-        );
+        String score = JOptionPane.showInputDialog("enter the number of points");
         int s = Integer.parseInt(score);
         return s;
     }
 
 
-    private void createButtons() throws FileNotFoundException {
+    //structure taken from the simple drawing project
+    //MODIFIES: this
+    //EFFECTS: initiallizes all the required buttons
+    private void createButtons() {
 
 
         JPanel toolArea = new JPanel();
@@ -94,7 +88,6 @@ public class GameApp extends JFrame {
         toolArea.setSize(new Dimension(10, 10));
         add(toolArea, BorderLayout.SOUTH);
 
-        displayLeaderboard();
 
         StartGameButton gameButton = new StartGameButton(this, toolArea);
         tools.add(gameButton);
@@ -114,22 +107,24 @@ public class GameApp extends JFrame {
 
     }
 
+    //MODIFIES: this
+    //EFFECTS:  Displays the leaderboard
     public void displayLeaderboard() {
 
         if (boardArea != null) {
             this.remove(boardArea);
-            System.out.println("Trigger");
         }
 
         boardArea = new JPanel();
         boardArea.setLayout(new GridLayout(0, 1));
-        boardArea.setSize(new Dimension(10, 10));
+        boardArea.setPreferredSize(new Dimension(200, 100));
+        imageArea = new JPanel();
+        imageArea.setLayout(new GridLayout(0, 1));
+        imageArea.setPreferredSize(new Dimension(200, 10));
 
-
-
-        add(boardArea, BorderLayout.NORTH);
-
-        JLabel title = new JLabel("The Current Leaderboard is as follows:");
+        add(boardArea, BorderLayout.WEST);
+        add(imageArea, BorderLayout.EAST);
+        JLabel title = new JLabel("The Current Leaderboard:");
         boardArea.add(title);
 
         for (Score s : board.getNames()) {
@@ -137,16 +132,25 @@ public class GameApp extends JFrame {
             boardArea.add(topScore2);
         }
         boardArea.revalidate();
-        add(boardArea);
+        add(boardArea, BorderLayout.WEST);
 
 
     }
 
-
-    private void initializeGraphics() throws FileNotFoundException {
+    //MODIFIES: this
+    //EFFECTS: initializes all the visual objects
+    private void initializeGraphics() {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(1000, 700));
         createButtons();
+        displayLeaderboard();
+
+        try {
+            image = ImageIO.read(new File("./data/Number1.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -163,37 +167,42 @@ public class GameApp extends JFrame {
     // REQUIRES: User input a movement value that is an integer.
 // MODIFIES: this
     // EFFECTS: allows you to actually play the game.
-    private void runGame() {
+    public void runGame() {
         boolean alive = true;
         resetGame();
         while (alive) {
             EnemyPattern enemy = new EnemyPattern(difficulty);
-            System.out.println(enemy.getPattern());
-            System.out.println(player.generatePosition(difficulty));
-            Timer t = new Timer();
-            t.schedule(setupTimer(player), 10 * 1000);
-            player.setIndex(input.nextInt());
-            if (timeOut) {
-                System.out.println("Your input was too late");
-                t.cancel();
+            String index = JOptionPane.showInputDialog(enemy.getPattern());
+            try {
+                player.setIndex(Integer.parseInt(index));
+            } catch (Exception e) {
                 break;
             }
-            t.cancel();
             if (player.getIndex() > difficulty || player.getIndex() < 0 || player.isDead(enemy)) {
-                System.out.println("You died!");
+//death
                 break;
             }
             currentScore = currentScore + difficultyIncrease(currentScore);
         }
         difficulty = 1;
 
-        createScore(currentScore);
+        String name = createName();
+        createScore(name, currentScore);
+        if (board.getNamesScore(name) == 1) {
+
+            drawPicture();
+        }
     }
 
+    //adapted from the PhotoAlbum Project
+    //MODIFIES: this
+    //EFFECTS: draws the number 1 image
+    private void drawPicture() {
 
-
-
-
+        JLabel pic = new JLabel(new ImageIcon(image));
+        imageArea.add(pic);
+        imageArea.revalidate();
+    }
 
 
     // MODIFIES: this
@@ -245,7 +254,7 @@ public class GameApp extends JFrame {
 
     // taken from the teller class example
     //EFFECTS: processes user command
-    private void startRunning() throws FileNotFoundException {
+    private void startRunning() {
         boolean keepGoing = true;
         String command = null;
 
@@ -299,7 +308,7 @@ public class GameApp extends JFrame {
     // taken from the teller class
     // MODIFIES: this
     // EFFECTS: initializes accounts
-    private void init() throws FileNotFoundException {
+    private void init() {
         board = new Leaderboard();
         initializeGraphics();
 
@@ -344,16 +353,10 @@ public class GameApp extends JFrame {
         }
     }
 
+    //EFFECTS: gets the top score with the given name and displays it
     public void frameShowTopScore() {
-        String name = (String) JOptionPane.showInputDialog(
-                this,
-                "Type a name",
-                "Score Finder",
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                null,
-                "bob"
-        );
+        String name = JOptionPane.showInputDialog("enter a name to find top score of");
+
         int index = board.getNamesScore(name);
         if (index > 0) {
             JOptionPane.showMessageDialog(this, "The highest score with that name is " + index);
@@ -397,7 +400,7 @@ public class GameApp extends JFrame {
 
     // Adapted from the JsonDemo project
     //MODIFIES: this
-    // EFFECTS: saves the workroom to file
+    // EFFECTS: saves the leaderboard to a file
 
     public void saveGameApp() {
         try {
@@ -440,14 +443,15 @@ public class GameApp extends JFrame {
 
     //Adapted from the Json
     // MODIFIES: this
-    // EFFECTS: loads workroom from file
+    // EFFECTS: loads leaderboard from file
     public void loadGameApp() {
         try {
             board = jsonReader.read();
-            System.out.println("Loaded " + /*workRoom.getName()*/ "Leaderboard " + " from " + JSON_STORE);
+            System.out.println("Loaded " + "Leaderboard " + " from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
+        displayLeaderboard();
     }
 
 
