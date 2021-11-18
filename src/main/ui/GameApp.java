@@ -32,7 +32,7 @@ import java.util.Scanner;
 // Note that the GameApp structure is based on the TellerApp project
 //this class runs the whole program. It interacts with the other classes to deliver the full user experience.
 
-//THis class also references the simple drawing project
+//This class also references the simple drawing project
 
 public class GameApp extends JFrame {
     private Scanner input;
@@ -46,7 +46,6 @@ public class GameApp extends JFrame {
     JPanel imageArea;
     private Leaderboard board;
     private int difficulty = 1;
-    private boolean timeOut = false;
     private Player player;
     private int currentScore;
 
@@ -60,14 +59,14 @@ public class GameApp extends JFrame {
     private JsonReader jsonReaderD;
 
 
-    //EFFECTS: opens a option panel and accepts a name
+    //EFFECTS: opens an option panel and accepts a name
     public String createName() {
         String name = JOptionPane.showInputDialog("enter a name");
         return name;
     }
 
-    //REQUIRES: input be a number
-    //EFFECTS: opens a option panel and accepts a number
+    //REQUIRES: input to be an integer
+    //EFFECTS: opens an option panel and accepts a number
     public int createPoints() {
         String score = JOptionPane.showInputDialog("enter the number of points");
         int s = Integer.parseInt(score);
@@ -107,6 +106,7 @@ public class GameApp extends JFrame {
 
     }
 
+    //structure taken from the simple drawing project
     //MODIFIES: this
     //EFFECTS:  Displays the leaderboard
     public void displayLeaderboard() {
@@ -128,7 +128,7 @@ public class GameApp extends JFrame {
         boardArea.add(title);
 
         for (Score s : board.getNames()) {
-            JLabel topScore2 = new JLabel(s.getName());
+            JLabel topScore2 = new JLabel(s.getName() + " " + s.getScore());
             boardArea.add(topScore2);
         }
         boardArea.revalidate();
@@ -179,7 +179,7 @@ public class GameApp extends JFrame {
                 break;
             }
             if (player.getIndex() > difficulty || player.getIndex() < 0 || player.isDead(enemy)) {
-//death
+                //death
                 break;
             }
             currentScore = currentScore + difficultyIncrease(currentScore);
@@ -211,7 +211,6 @@ public class GameApp extends JFrame {
     private void resetGame() {
         currentScore = 0;
         player = new Player();
-        timeOut = false;
     }
 
     //MODIFIES: this
@@ -222,32 +221,12 @@ public class GameApp extends JFrame {
         }
         return 1;
     }
+
     // MODIFIES: this
-    // EFFECTS: creates a new score with the given value
-
-    private void createScore(int score) {
-        System.out.println("Give your score a name:");
-        board.addScore(new Score(input.next(), score));
-
-    }
-
+    // EFFECTS: creates a new score with the given values
     public void createScore(String name, int score) {
         board.addScore(new Score(name, score));
         displayLeaderboard();
-
-    }
-
-    // MODIFIES: this
-    // EFFECTS: setups the timer
-    private TimerTask setupTimer(Player p) {
-
-
-        TimerTask tt = new TimerTask() {
-            public void run() {
-                timeOut = true;
-            }
-        };
-        return tt;
 
     }
 
@@ -353,7 +332,8 @@ public class GameApp extends JFrame {
         }
     }
 
-    //EFFECTS: gets the top score with the given name and displays it
+    //REQUIRES: input be an integer
+    //EFFECTS: gets the top score with the given name and displays its ranking
     public void frameShowTopScore() {
         String name = JOptionPane.showInputDialog("enter a name to find top score of");
 

@@ -43,7 +43,7 @@ public class AddScoreButton extends Tool {
     private class ButtonToolClickHandler implements ActionListener {
 
         //MODIFIES: current
-        // EFFECTS: gets the top score
+        // EFFECTS: gets the top score on click
         @Override
         public void actionPerformed(ActionEvent e) {
             String name = current.createName();
