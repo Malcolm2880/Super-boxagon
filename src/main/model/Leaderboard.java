@@ -35,17 +35,23 @@ public class Leaderboard implements Writable {
 
     public void addScore(Score s) {
         if (names.size() == 0) {
+            EventLog.getInstance().logEvent(new Event("Added Score: " + s.getName() + " " + s.getScore()));
+
             names.add(s);
             return;
 
         }
-        for (int i = 0; i < names.size();i++) {
+        for (int i = 0; i < names.size(); i++) {
             if (s.getScore() >= names.get(i).getScore()) {
-                names.add(i,s);
+                names.add(i, s);
+                EventLog.getInstance().logEvent(new Event("Added Score: " + s.getName() + " " + s.getScore()));
+
                 return;
             }
 
         }
+        EventLog.getInstance().logEvent(new Event("Added Score: " + s.getName() + " " + s.getScore()));
+
         names.add(s);
     }
 

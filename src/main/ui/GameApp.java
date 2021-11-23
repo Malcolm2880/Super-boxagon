@@ -7,18 +7,17 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import model.*;
+import model.Event;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 import ui.tools.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.util.Scanner;
 
 // This class references code from this repo
 // Link: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
@@ -154,6 +153,17 @@ public class GameApp extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                EventLog el = EventLog.getInstance();
+
+                for (Event next : el) {
+                    System.out.println(next.getDate() + " " + next.getDescription());
+                }
+            }
+        });
+
 
     }
 
