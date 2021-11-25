@@ -153,6 +153,7 @@ public class GameApp extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
+        //the following code is adapted from https://stackoverflow.com/questions/32051657/how-to-perform-action-after-jframe-is-closed
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {

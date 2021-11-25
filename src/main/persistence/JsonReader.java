@@ -1,5 +1,7 @@
 package persistence;
 
+import model.Event;
+import model.EventLog;
 import model.Leaderboard;
 import model.Score;
 
@@ -64,6 +66,8 @@ public class JsonReader {
     // EFFECTS: parses Scores from JSON object and adds them to leaderboard
     private void addScores(Leaderboard lb, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("Scores");
+        EventLog.getInstance().logEvent(new Event("Loaded Scores"));
+
         for (Object json : jsonArray) {
             JSONObject nextScore = (JSONObject) json;
             addScore(lb, nextScore);

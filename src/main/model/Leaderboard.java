@@ -86,10 +86,14 @@ public class Leaderboard implements Writable {
         int index = 1;
         for (Score i : names) {
             if (i.getName().equalsIgnoreCase(givenName)) {
+                EventLog.getInstance().logEvent(new Event("Found the top score of name: " + givenName));
+
                 return index;
             }
             index++;
         }
+        EventLog.getInstance().logEvent(new Event("did not find a score from " + givenName));
+
         return -1;
     }
 
