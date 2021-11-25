@@ -66,7 +66,6 @@ public class JsonReader {
     // EFFECTS: parses Scores from JSON object and adds them to leaderboard
     private void addScores(Leaderboard lb, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("Scores");
-        EventLog.getInstance().logEvent(new Event("Loaded Scores"));
 
         for (Object json : jsonArray) {
             JSONObject nextScore = (JSONObject) json;

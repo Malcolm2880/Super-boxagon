@@ -30,3 +30,19 @@ You must input the index you wish to avoiding spikes along the way. The more por
 Beware that the number of spikes will increase as you gain more score.
 Also to note, that if you fail to input an index in time, the portal will close, and you will die.
 If you also input an invalid index then you also die.
+
+
+#Phase 4: Task 2
+- Thu Nov 25 12:18:58 PST 2021 Added Score: bob 10
+- Thu Nov 25 12:19:06 PST 2021 Added Score: ten  0
+- Thu Nov 25 12:19:18 PST 2021 Added Score: oh no 0
+
+#Phase 4: Task 3
+
+I'm overall pretty happy with the structuring of the project however there is a few things I would change
+
+- Make a more pretty UI
+- Split game app into subclasses. It currently does too much. (ui generation AND functionality)
+- Make only one json reader/writer vs 2
+- Possibly combine buttons and tools together. Currently there is a lot of duplication of button code.
+

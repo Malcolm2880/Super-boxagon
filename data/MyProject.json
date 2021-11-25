@@ -1,14 +1,4 @@
-{"Scores": [
-    {
-        "score": 17,
-        "name": "Tony"
-    },
-    {
-        "score": 13,
-        "name": "Chris"
-    },
-    {
-        "score": 5,
-        "name": "Adam"
-    }
-]}
+{"Scores": [{
+    "score": 10,
+    "name": "bob"
+}]}

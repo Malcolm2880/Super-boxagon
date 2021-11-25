@@ -53,7 +53,6 @@ public class JsonWriter {
     // MODIFIES: this
     // EFFECTS: writes string to file
     private void saveToFile(String json) {
-        EventLog.getInstance().logEvent(new Event("Saved Scores"));
 
         writer.print(json);
     }
