@@ -33,9 +33,19 @@ If you also input an invalid index then you also die.
 
 
 #Phase 4: Task 2
-- Thu Nov 25 12:18:58 PST 2021 Added Score: bob 10
-- Thu Nov 25 12:19:06 PST 2021 Added Score: ten  0
-- Thu Nov 25 12:19:18 PST 2021 Added Score: oh no 0
+Fri Nov 26 11:43:10 PST 2021 Wiped the board
+Fri Nov 26 11:43:21 PST 2021 Added Score: fred 3
+Fri Nov 26 11:43:34 PST 2021 Added Score: harry 8
+Fri Nov 26 11:43:38 PST 2021 Saved Score: harry 8
+Fri Nov 26 11:43:38 PST 2021 Saved Score: fred 3
+Fri Nov 26 11:43:55 PST 2021 Added Score: joe 0
+Fri Nov 26 11:44:07 PST 2021 Added Score: george 15 50
+Fri Nov 26 11:44:11 PST 2021 Wiped the board
+Fri Nov 26 11:44:11 PST 2021 Added Score: harry 8
+Fri Nov 26 11:44:11 PST 2021 Added Score: fred 3
+
+Currently there is no good way to log the loaded of a new leaderboard. As such I have implemented a "wiping" logging whenever a new leaderboard is created. Since the code always only references the new leaderboard I felt this compromise would be acceptable.
+ In hindsight It would have been better to implement a "remove all" method within leaderboard to allow for more accurate logging.
 
 #Phase 4: Task 3
 
@@ -45,4 +55,5 @@ I'm overall pretty happy with the structuring of the project however there is a 
 - Split game app into subclasses. It currently does too much. (ui generation AND functionality)
 - Make only one json reader/writer vs 2
 - Possibly combine buttons and tools together. Currently there is a lot of duplication of button code.
+- Never construct more than one leaderboard, instead, just alter the original.
 

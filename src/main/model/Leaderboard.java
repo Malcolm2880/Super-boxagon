@@ -22,6 +22,8 @@ public class Leaderboard implements Writable {
     // EFFECTS: Creates an empty leaderboard.
     public Leaderboard() {
         names = new ArrayList<Score>();
+        EventLog.getInstance().logEvent(new Event("Wiped the board"));
+
     }
 
 
@@ -113,6 +115,8 @@ public class Leaderboard implements Writable {
         JSONArray jsonArray = new JSONArray();
 
         for (Score s : names) {
+            EventLog.getInstance().logEvent(new Event("Saved Score: " + s.getName() + " " + s.getScore()));
+
             jsonArray.put(s.toJson());
         }
 
